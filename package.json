@@ -1,0 +1,29 @@
+{
+  "name": "node_netflix_movie",
+  "version": "1.0.0",
+  "description": "we create api for Netflix Movie \r # npm install",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "dev": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chintanvadadoriya/node_Netflix_Movie.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chintanvadadoriya/node_Netflix_Movie/issues"
+  },
+  "homepage": "https://github.com/Chintanvadadoriya/node_Netflix_Movie#readme",
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.2.0",
+    "nodemon": "^2.0.22"
+  }
+}
