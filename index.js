@@ -2,6 +2,7 @@ const express =require("express")
 const app =express()
 const dotenv = require('dotenv')
 const authRoute =require("./routes/auth")
+const usersRoute =require("./routes/users")
 
 const mongoose =require("mongoose")
 
@@ -17,6 +18,7 @@ app.use(express.json());
 
 
 app.use("/api/auth",authRoute)
+app.use("/api/users",usersRoute)
 
 app.listen(5000,()=>{
      console.log("Server is running on 5000 ! Port");

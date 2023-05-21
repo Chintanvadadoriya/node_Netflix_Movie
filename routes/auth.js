@@ -39,7 +39,7 @@ router.post('/login', async (req, res) => {
           var originalPassword = bytes.toString(CryptoJS.enc.Utf8);
 
           originalPassword !== req.body.password.toString() && res.status(404).json("Worg password !")
-          const accessToken = jwt.sign({ id: user._id, isAdmin: user.isAdmin, email: user.email }, process.env.SECRET_KEY, { expiresIn: "30d" })
+          const accessToken = jwt.sign({ id: user._id, isAdmin: user.isAdmin, email: user.email }, process.env.SECRET_KEY, { expiresIn: "365d" })
 
           const { password, ...info } = user._doc;
 
