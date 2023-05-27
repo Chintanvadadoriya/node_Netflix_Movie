@@ -5,14 +5,10 @@ const authRoute =require("./routes/auth")
 const usersRoute =require("./routes/users")
 const movieRoute =require("./routes/movie")
 const listRoute =require("./routes/list")
-
-
-
-
 const mongoose =require("mongoose")
-
+var cors = require('cors')
 dotenv.config()
-
+app.use(cors());
 
 mongoose.connect(process.env.MONGO_URL,{
      useNewUrlParser: true,
