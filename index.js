@@ -10,10 +10,17 @@ var cors = require('cors')
 dotenv.config()
 app.use(cors());
 
-mongoose.connect(process.env.MONGO_URL,{
-     useNewUrlParser: true,
-     useUnifiedTopology: true
-     }).then(()=>console.log("DB connected Successfull !")).catch((err)=>console.log("Errorr Connect Db",err));
+mongoose.set("strictQuery", false);
+mongoose.connect(process.env.MONGO_URL,
+     (err) => {
+          if (err) {
+               console.log('err on cloud mongoose :>> ', err);
+          } else {
+
+               console.log('connection cloud !!!');
+          }
+     
+});
 
 app.use(express.json());
 
