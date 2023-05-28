@@ -10,17 +10,26 @@ var cors = require('cors')
 dotenv.config()
 app.use(cors());
 
-mongoose.set("strictQuery", false);
-mongoose.connect(process.env.MONGO_URL,
-     (err) => {
-          if (err) {
-               console.log('err on cloud mongoose :>> ', err);
-          } else {
+const db=async()=>{
+     try{
+          mongoose.set("strictQuery", false);
 
-               console.log('connection cloud !!!');
-          }
-     
-});
+         await mongoose.connect(process.env.MONGO_URL,
+               (err) => {
+                    if (err) {
+                         console.log('err on cloud mongoose :>> ', err);
+                    } else {
+          
+                         console.log('connection cloud !!!');
+                    }
+               
+          });
+     }catch(err){
+          console.log("db",err);
+     }
+}
+
+db()
 
 app.use(express.json());
 
