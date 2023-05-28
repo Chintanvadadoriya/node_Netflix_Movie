@@ -5,14 +5,15 @@ const verify = require("../varifyToken")
 
 //CREATE
 
-router.post('/movie', verify, async (req, res) => {
+router.post('/movie', verify, async (req, res,next) => {
      if (req.user.isAdmin) {
           const newMovie = new Movie(req.body)
           try {
                const saveMovie = await newMovie.save()
                res.status(201).json(saveMovie)
           } catch (err) {
-               res.json(err)
+               next(err);
+               // res.json(err)
           }
 
      } else {
@@ -22,13 +23,14 @@ router.post('/movie', verify, async (req, res) => {
 
 //UPDATE
 
-router.put('/:id', verify, async (req, res) => {
+router.put('/:id', verify, async (req, res,next) => {
      if (req.user.isAdmin) {
           try {
                const UpdateMovie = await Movie.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
                res.status(200).json(UpdateMovie)
           } catch (err) {
-               res.status(500).json('catch newmovie update', err)
+               next(err);
+               // res.status(500).json('catch newmovie update', err)
           }
 
      } else {
@@ -39,13 +41,14 @@ router.put('/:id', verify, async (req, res) => {
 
 //DELETE
 
-router.delete('/:id', verify, async (req, res) => {
+router.delete('/:id', verify, async (req, res,next) => {
      if (req.user.isAdmin) {
           try {
                await Movie.findByIdAndDelete(req.params.id)
                res.status(200).json("The movie has been deleted !")
           } catch (err) {
-               res.status(500).json('catch newmovie delete', err)
+               next(err);
+               // res.status(500).json('catch newmovie delete', err)
           }
 
      } else {
@@ -55,18 +58,19 @@ router.delete('/:id', verify, async (req, res) => {
 
 //GET 
 
-router.get('/find/:id', verify, async (req, res) => {
+router.get('/find/:id', verify, async (req, res,next) => {
      try {
           const Movies = await Movie.findById(req.params.id)
           res.status(200).json(Movies)
      } catch (err) {
-          res.status(500).json('catch newmovie get', err)
+          next(err);
+          // res.status(500).json('catch newmovie get', err)
      }
 })
 
 //GET RENDOM
 
-router.get('/random', verify, async (req, res) => {
+router.get('/random', verify, async (req, res,next) => {
      const type = req.query.type;
      let movie;
      try {
@@ -83,7 +87,8 @@ router.get('/random', verify, async (req, res) => {
           }
           res.status(200).json(movie)
      } catch (err) {
-          res.status(500).json('catch rendom', err)
+          next(err);
+          // res.status(500).json('catch rendom', err)
      }
 
 
@@ -91,12 +96,13 @@ router.get('/random', verify, async (req, res) => {
 
 //GET ALL MOVIE
 
-router.get('/', verify, async (req, res) => {
+router.get('/', verify, async (req, res,next) => {
      try {
           const Movies = await Movie.find()
           res.status(200).json(Movies.reverse())
      } catch (err) {
-          res.status(500).json('catch all movie get', err)
+          next(err);
+          // res.status(500).json('catch all movie get', err)
      }
 })
 module.exports = router

@@ -5,7 +5,7 @@ const verify = require("../varifyToken")
 
 //UPDATE
 
-router.put('/:id', verify, async (req, res) => {
+router.put('/:id', verify, async (req, res,next) => {
      if (req.user.id === req.params.id || req.user.isAdmin) {
           if (req.body.password) {
                req.body.password = CryptoJS.AES.encrypt(req.body.password.toString(), process.env.SECRET_KEY).toString()
@@ -15,7 +15,8 @@ router.put('/:id', verify, async (req, res) => {
                res.status(200).json(Updateuser)
 
           } catch (err) {
-               res.status(500).json("catch Update", err)
+               next(err);
+               // res.status(500).json("catch Update", err)
           }
      } else {
           return res.status(403).json("You can update only your account !")
@@ -25,7 +26,7 @@ router.put('/:id', verify, async (req, res) => {
 
 //DELETE
 
-router.delete('/:id', verify, async (req, res) => {
+router.delete('/:id', verify, async (req, res,next) => {
      if (req.user.id === req.params.id || req.user.isAdmin) {
 
           try {
@@ -33,7 +34,8 @@ router.delete('/:id', verify, async (req, res) => {
                res.status(200).json("User has been deleted... !")
 
           } catch (err) {
-               res.status(500).json("catch delete", err)
+               next(err);
+               // res.status(500).json("catch delete", err)
           }
      } else {
           return res.status(403).json("You can delete only your account !")
@@ -42,20 +44,21 @@ router.delete('/:id', verify, async (req, res) => {
 
 
 //GET
-router.get('/find/:id', async (req, res) => {
+router.get('/find/:id', async (req, res,next) => {
 
      try {
           const user = await User.findById(req.params.id)
           res.status(200).json(user)
 
      } catch (err) {
-          res.status(500).json("catch get", err)
+          next(err);
+          // res.status(500).json("catch get", err)
      }
 
 })
 // GET ALL
 
-router.get('/', verify, async (req, res) => {
+router.get('/', verify, async (req, res,next) => {
      const query = req.query.new;
      if (req.user.isAdmin) {
           try {
@@ -63,7 +66,8 @@ router.get('/', verify, async (req, res) => {
                res.status(200).json(users)
 
           } catch (err) {
-               res.status(500).json("catch get all user", err)
+               next(err);
+               // res.status(500).json("catch get all user", err)
           }
      } else {
           return res.status(403).json("You are not allow to see all user !")
@@ -73,7 +77,7 @@ router.get('/', verify, async (req, res) => {
 
 //GET USER STATS
 
-router.get('/stats', async (req, res) => {
+router.get('/stats', async (req, res,next) => {
      const today = new Date();
      const lastYear = today.setFullYear(today.setFullYear() - 1);
 
@@ -95,7 +99,8 @@ router.get('/stats', async (req, res) => {
           res.status(200).json(data)
 
      }catch(err){
-          res.status(500).status("catch get user stats",err)
+          next(err);
+          // res.status(500).status("catch get user stats",err)
      }
 })
 

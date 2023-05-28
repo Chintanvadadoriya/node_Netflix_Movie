@@ -5,14 +5,16 @@ const verify = require("../varifyToken")
 
 //CREATE
 
-router.post('/list', verify, async (req, res) => {
+router.post('/list', verify, async (req, res,next) => {
      if (req.user.isAdmin) {
           const newList = new List(req.body)
           try {
                const saveList = await newList.save()
                res.status(201).json(saveList)
           } catch (err) {
-               res.status(500).json('catch newlist', err)
+               next(err);
+
+               // res.status(500).json('catch newlist', err)
           }
 
      } else {
@@ -22,13 +24,14 @@ router.post('/list', verify, async (req, res) => {
 
 //DELETE
 
-router.delete('/:id', verify, async (req, res) => {
+router.delete('/:id', verify, async (req, res,next) => {
      if (req.user.isAdmin) {
           try {
                await List.findByIdAndDelete(req.params.id)
                res.status(201).json("The list has been deleted.. !")
           } catch (err) {
-               res.status(500).json('catch delete list', err)
+               next(err);
+               // res.status(500).json('catch delete list', err)
           }
 
      } else {
@@ -38,7 +41,7 @@ router.delete('/:id', verify, async (req, res) => {
 
 // GET
 
-router.get('/', verify, async (req, res) => {
+router.get('/', verify, async (req, res,next) => {
      
      const typeQuery = req.query.type;
      const genreQuery = req.query.genre;
@@ -64,8 +67,8 @@ router.get('/', verify, async (req, res) => {
           }
         res.status(200).json(list)
      } catch (err) {
-          console.log("err",err);
-          res.status(500).json(err)
+          next(err)
+          // res.status(500).json(err)
      }
 })
 
