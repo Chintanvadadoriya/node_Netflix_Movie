@@ -12,7 +12,7 @@ router.post('/register', async (req, res,next) => {
      const newUser = new User({
           username: req.body.username,
           email: req.body.email,
-          password: CryptoJS.AES.encrypt(req.body.password.toString(), process.env.SECRET_KEY).toString()
+          password: CryptoJS.AES.encrypt(req.body.password.toString(), process.env.chintan).toString()
 
      })
 
@@ -35,12 +35,12 @@ router.post('/login', async (req, res,next) => {
 
           !user && res.status(404).json("Worg email !")
 
-          const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
+          const bytes = CryptoJS.AES.decrypt(user.password, chintan);
 
           var originalPassword = bytes.toString(CryptoJS.enc.Utf8);
 
           originalPassword !== req.body.password.toString() && res.status(404).json("Worg password !")
-          const accessToken = jwt.sign({ id: user._id, isAdmin: user.isAdmin, email: user.email }, process.env.SECRET_KEY, { expiresIn: "365d" })
+          const accessToken = jwt.sign({ id: user._id, isAdmin: user.isAdmin, email: user.email }, chintan, { expiresIn: "365d" })
 
           const { password, ...info } = user._doc;
 

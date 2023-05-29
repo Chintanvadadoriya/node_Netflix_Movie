@@ -8,7 +8,7 @@ const verify = require("../varifyToken")
 router.put('/:id', verify, async (req, res,next) => {
      if (req.user.id === req.params.id || req.user.isAdmin) {
           if (req.body.password) {
-               req.body.password = CryptoJS.AES.encrypt(req.body.password.toString(), process.env.SECRET_KEY).toString()
+               req.body.password = CryptoJS.AES.encrypt(req.body.password.toString(),chintan).toString()
           }
           try {
                const Updateuser = await User.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
