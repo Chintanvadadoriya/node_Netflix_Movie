@@ -10,7 +10,6 @@ var cors = require('cors')
 dotenv.config({path:process.env.MONGO_URL})
 app.use(cors());
 
-console.log(typeof(process.env.MONGO_URL));
 const db=async()=>{
      try{
           mongoose.set("strictQuery", false);
