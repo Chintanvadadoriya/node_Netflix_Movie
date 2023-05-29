@@ -7,9 +7,10 @@ const movieRoute =require("./routes/movie")
 const listRoute =require("./routes/list")
 const mongoose =require("mongoose")
 var cors = require('cors')
-dotenv.config()
+dotenv.config({path:process.env.MONGO_URL})
 app.use(cors());
 
+console.log(typeof(process.env.MONGO_URL));
 const db=async()=>{
      try{
           mongoose.set("strictQuery", false);
