@@ -15,7 +15,7 @@ const db=async()=>{
      try{
           mongoose.set("strictQuery", false);
 
-         await mongoose.connect(process.env.MONGO_URL,
+         await mongoose.connect("mongodb+srv://chintan:Chi16nta12n199@atlascluster.vj9lvwp.mongodb.net/netflix?retryWrites=true&w=majority",
                (err) => {
                     if (err) {
                          console.log('err on cloud mongoose :>> ', err);
